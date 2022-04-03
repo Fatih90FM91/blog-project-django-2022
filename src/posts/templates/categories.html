@@ -1,0 +1,38 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %} {{post.title_tag }} {% endblock %}
+
+{% block content %}
+
+{% if category_posts %}
+        <h1>welcome to the Category page</h1>
+            <h2>{{cats}}</h2
+        {% for post in category_posts %}
+        
+                <li> <a href ="{% url 'article-detail' post.pk %}" > {{post.title}}
+                </a> - {{post.author.first_name}}  {{post.author.last_name}}  - {{post.author.email}} - {{post.post_date}}
+                {% if user.is_authenticated %}
+                <small>
+                    <a href="{% url 'update-post' post.pk %}">edit</a>
+                    <a href="{% url 'delete-post' post.pk %}">delete</a>
+
+                </small><br>
+                {%endif%}
+                {{post.body | slice:":200"}}
+                </li>
+        
+        
+        
+        
+        {% endfor %}
+
+        {%else%}
+
+        <h2>Sorry..There is no matching categories..</h2>
+
+ {% endif %}
+
+
+{% endblock %}

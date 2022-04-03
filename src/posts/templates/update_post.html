@@ -1,0 +1,32 @@
+
+{% extends 'base.html' %}
+
+{% block title %} This is Update Page..} {% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+                <h1>welcome to the Update Post</h1>
+                <br><br>
+                <div class= 'form-control' >
+                        <form method="POST">
+                        
+                                {% csrf_token %}
+                                {{form.media}}
+                                {{form.as_p}}
+                                {% if user.id == post.author.id %}
+                                <button class="btn btn-secondary">update</button>
+                                {%else%}
+                                <h5>You're not allowed to here Please register or login...!!!</h5>
+                                {%endif%}
+                
+                        </form>
+
+                </div>
+
+                {%else%}
+
+                <h5>You're not allowed to here Please register or login...!!!</h5>
+        
+         {%endif%}
+
+{% endblock %}

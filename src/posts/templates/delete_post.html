@@ -1,0 +1,34 @@
+
+{% extends 'base.html' %}
+
+{% block title %} This is delete Page..} {% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+                <h1>welcome to the Delete Post</h1>
+                <br><br>
+                <h3>Delete :{{post.title}} </h3>
+                <div class= 'form-control' >
+                        <form method="POST">
+                        
+                                {% csrf_token %}
+
+                        <strong>Are you sure to proccess deleting?</strong>
+                                <br><br>
+                                {% if user.id == post.author.id %}
+                                <button class="btn btn-secondary">delete</button>
+                                {%else%}
+                                <h5>You're not allowed to here Please register or login...!!!</h5>
+                                {%endif%}
+                
+                        </form>
+
+                </div>
+
+                {%else%}
+
+                <h5>You're not allowed to here Please register or login...!!!</h5>
+        
+         {%endif%}
+
+{% endblock %}

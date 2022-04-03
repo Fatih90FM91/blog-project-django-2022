@@ -1,0 +1,40 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %} {{post.title_tag }} {% endblock %}
+
+{% block content %}
+
+<h1>welcome to the home page</h1>
+
+
+<ul>
+{% for post in object_list %}
+
+<li> <a href ="{% url 'article-detail' post.pk %}" > {{post.title}}
+     </a> - {{post.author.first_name}}  {{post.author.last_name}}
+      - <a href="{% url 'category' post.category|slugify %}">{{post.category}}</a>
+       - {{post.author.email}}
+        - {{post.post_date}}
+     {% if user.is_authenticated %}
+              {% if user.id == post.author.id %}
+               <small>
+               <a href="{% url 'update-post' post.pk %}">edit</a>
+               <a href="{% url 'delete-post' post.pk %}">delete</a>
+
+               </small><br>
+               {%endif%}
+               {%endif%}
+               <br>
+        {{post.snippet}}
+       
+     {% comment %} {{post.body|safe|slice:":200"}} {% endcomment %}
+</li>
+
+{% endfor %}
+
+</ul>
+
+
+{% endblock %}

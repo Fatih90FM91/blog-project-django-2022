@@ -1,0 +1,86 @@
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} user profile {% endblock %}
+
+{% block content %}
+
+<h1>welcome to the User Profile....</h1>
+
+
+
+
+<div class="card mb-3" >
+    <div class="row g-0">
+        {%if user_page.profile_pic %}
+            <div class="col-md-2">
+                <img src="{{user_page.profile_pic.url}}" class="img-fluid rounded-start"  width=200 ,height=200>
+            </div>
+       {%else%}
+
+            <div class="col-md-2">
+                <img src="  {% static 'posts/images/dummy450x450.jpg ' %} " class="img-fluid rounded-start"  width=200 ,height=200>
+            </div>
+
+       {%endif%}
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title">
+            {{user_page.user.first_name}} {{user_page.user.last_name}}
+          </h5>
+          <p class="small-text"><small class="text-muted">
+                   
+            
+
+                      {% if user_page.website_url%}
+                     <a href="{{user_page.website_url}}">   Website </a>  
+                       {%endif%}
+
+                       {% if user_page.facebook_url%}
+                        |<a href="{{user_page.facebook_url}}">    Facebook </a> 
+                        {%endif%}
+
+                        {% if user_page.twitter_url%}
+                            |<a href="{{user_page.twitter_url}}">     Twitter </a>  
+                            {%endif%}
+
+                            {% if user_page.linkedin_url%}
+                                |<a href="{{user_page.linkedin_url}}">     Linkedin </a>  
+                                {%endif%}
+
+                                {% if user_page.instagram_url%}
+                                    |<a href="{{user_page.instagram_url}}">     Instagram </a>  
+                                       
+                                    {%endif%}
+
+                                    {% if user_page.printerest_url%}
+                                        |<a href="{{user_page.printerest_url}}">     Printerest </a>  
+                                           
+                                        {%endif%}
+
+                                        {% if user_page.indeed_url%}
+                                            |<a href="{{user_page.indeed_url}}">    Indeed </a>  
+                                                
+                                            {%endif%}
+
+                                            {% if user_page.portfolio_url%}
+                                                |<a href="{{user_page.portfolio_url}}">    Portfolio </a>  
+                                                    {%endif%}
+
+                                                {% if user_page.youtube_url%}
+                                                    <a href="{{user_page.youtube_url}}">     Youtube</a>  
+                                                       {%endif%}
+          </small></p>
+          <p class="card-text">
+            {{user_page.bio}}
+          </p>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

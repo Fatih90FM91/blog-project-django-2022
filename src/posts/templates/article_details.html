@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{post.title_tag }} {% endblock %}
+
+{% block content %}
+
+<h1>welcome to the Article Detail Page</h1>
+
+<h2>{{post.title}}</h2>
+<small>By : {{post.author.first_name}} {{post.author.last_name}} - {{post.post_date}} <br>
+    <strong style="color:#8F384D">{{post.category}}</strong>
+    {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}
+            <a href="{% url 'update-post' post.pk %}">edit</a>
+            <a href="{% url 'delete-post' post.pk %}">delete</a>
+
+            {%else%}
+            <h5>You're not allowed to here Please register or login...!!!</h5>
+        {% endif %}
+        
+
+     <br>
+     {%endif%}
+<hr>
+<br>
+{%if post.header_image %}
+ <img src="{{post.header_image.url}}" width='20%'>
+
+
+ {%endif%} 
+
+<br><br>
+{{post.body|safe}}
+
+<br><br>
+
+<a href="{% url 'home' %}" class="btn btn-dark">Back</a>
+</small>
+<br><br>
+
+
+
+
+
+{% comment %} --------------------comments------------------------------ {% endcomment %}
+
+   
+
+
+
+<br><br>
+
+
+<form action ="{% url 'like-post' post.pk %}" method ="POST">
+    {% if user.is_authenticated %}
+    {%csrf_token%}
+            {% if liked %}
+            <button type="sumbit" name="post_id" value ="{{post.id}}" class="btn btn-danger">Unlike</button>
+            
+            
+            {%else%}
+
+            <button type="sumbit" name="post_id" value ="{{post.id}}" class="btn btn-warning">like</button>
+
+            {% endif %}
+
+            {%else%}
+
+            <small><a class="nav-link" href="{% url 'login'%}"><strong>Login</strong></a> to like </small>
+
+    {%endif%}
+            {{total_likes}} - Likes
+ 
+
+    
+</form>
+
+<br><br>
+
+
+<div class="card mb-3" >
+    <div class="row g-0">
+        {%if post.author.profile.profile_pic %}
+            <div class="col-md-2">
+                <img src="{{post.author.profile.profile_pic.url}}" class="img-fluid rounded-start"  width=200 ,height=200>
+            </div>
+       {%else%}
+
+            <div class="col-md-2">
+                <img src="  {% static 'posts/images/dummy450x450.jpg ' %} " class="img-fluid rounded-start"  width=200 ,height=200>
+            </div>
+
+       {%endif%}
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title">
+            {{post.author.first_name}} {{post.author.last_name}}
+          </h5>
+          <p class="small-text"><small class="text-muted">
+                   
+            <a href=" {% url 'show-profile-page' post.author.profile.id %}">   Profile page </a>  
+
+                      {% if post.author.profile.website_url%}
+                     |<a href="{{post.author.profile.website_url}}">   Website </a>  
+                       {%endif%}
+
+                       {% if post.author.profile.facebook_url%}
+                        |<a href="{{post.author.profile.facebook_url}}">    Facebook </a> 
+                        {%endif%}
+
+                        {% if post.author.profile.twitter_url%}
+                            |<a href="{{post.author.profile.twitter_url}}">     Twitter </a>  
+                            {%endif%}
+
+                            {% if post.author.profile.linkedin_url%}
+                                |<a href="{{post.author.profile.linkedin_url}}">     Linkedin </a>  
+                                {%endif%}
+
+                                {% if post.author.profile.instagram_url%}
+                                    |<a href="{{post.author.profile.instagram_url}}">     Instagram </a>  
+                                       
+                                    {%endif%}
+
+                                    {% if post.author.profile.printerest_url%}
+                                        |<a href="{{post.author.profile.printerest_url}}">     Printerest </a>  
+                                           
+                                        {%endif%}
+
+                                        {% if post.author.profile.indeed_url%}
+                                            |<a href="{{post.author.profile.indeed_url}}">    Indeed </a>  
+                                                
+                                            {%endif%}
+
+                                            {% if post.author.profile.portfolio_url%}
+                                                |<a href="{{post.author.profile.portfolio_url}}">    Portfolio </a>  
+                                                    {%endif%}
+
+                                                {% if post.author.profile.youtube_url%}
+                                                    <a href="{{post.author.profile.youtube_url}}">     Youtube</a>  
+                                                       {%endif%}
+          </small></p>
+          <p class="card-text">
+            {{post.author.profile.bio}}
+          </p>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% comment %} --------------------profile-detail------------------------------ {% endcomment %}
+
+<br>
+    <h2> Comments....</h2>
+    <br>
+      {% if  not post.comments.all %}
+      
+        No comments yet..!! <a href="{% url 'add-comment' post.pk %}">Add comment</a>
+        
+        {%else%}
+
+        {% for comment in post.comments.all %}
+            
+        <strong>
+          {{comment.name}} - 
+          {{comment.date_added}}
+        </strong>
+        <br> 
+
+          {{comment.body}}
+        <br><br>
+        {% endfor %}
+        <a href=" {% url 'add-comment' post.pk %}"><strong>Add a comment</strong></a>
+  {% endif %}
+
+    
+
+
+     <br><br><br><br>
+
+{% endblock %}

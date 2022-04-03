@@ -1,0 +1,27 @@
+
+{% extends 'base.html' %}
+
+{% block title %} Edit Settings {% endblock %}
+
+{% block content %}
+
+<h1>welcome to the Edit Settings</h1>
+<br><br>
+  {{user.profile.bio}}
+<br><br>
+<div class= 'form-control' >
+        <form method="POST">
+            
+                {% csrf_token %}
+
+                {{form.as_p}}
+
+                <button class="btn btn-secondary">Update Profile</button>
+   
+        </form>
+
+ </div>
+
+
+
+{% endblock %}
