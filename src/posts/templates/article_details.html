@@ -78,6 +78,7 @@
 
 <br><br>
 
+{% if post.author.profile %}
 
 <div class="card mb-3" >
     <div class="row g-0">
@@ -175,6 +176,13 @@
   {% endif %}
 
     
+
+  {%else%}
+
+  <h2>There is NO profile details..Please create your profile account!!</h2>
+  
+  {% endif %}
+  
 
 
      <br><br><br><br>
